@@ -1,6 +1,6 @@
 def foo(int test1): 
 string some2 
-for i  in (12): 
+for i in 12: 
 print(i) 
 main 
 int a = 2 

@@ -62,15 +62,6 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#method_call.
-    def enterMethod_call(self, ctx:ExprParser.Method_callContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#method_call.
-    def exitMethod_call(self, ctx:ExprParser.Method_callContext):
-        pass
-
-
     # Enter a parse tree produced by ExprParser#method_name.
     def enterMethod_name(self, ctx:ExprParser.Method_nameContext):
         pass
@@ -86,6 +77,24 @@ class ExprListener(ParseTreeListener):
 
     # Exit a parse tree produced by ExprParser#expr.
     def exitExpr(self, ctx:ExprParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#method_call.
+    def enterMethod_call(self, ctx:ExprParser.Method_callContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#method_call.
+    def exitMethod_call(self, ctx:ExprParser.Method_callContext):
+        pass
+
+
+    # Enter a parse tree produced by ExprParser#var_assign.
+    def enterVar_assign(self, ctx:ExprParser.Var_assignContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#var_assign.
+    def exitVar_assign(self, ctx:ExprParser.Var_assignContext):
         pass
 
 
