@@ -44,5 +44,6 @@ def main():
     graph.write_png("parse_tree.png")
     print("Parse tree visualization saved as parse_tree.png")
 
+    print(Trees.toStringTree(tree, None, parser))
 if __name__ == '__main__':
     main()

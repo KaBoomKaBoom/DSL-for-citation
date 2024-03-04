@@ -1,8 +1,7 @@
-def foo(int test1): 
-string some2 
-for i in 12: 
-print(i) 
 main 
-int a = 2 
-if a <= 15: 
-foo(i) 
+string[2] quotes
+quotes = "jhfhafafdbjabfshbf"  
+int a
+a = 12
+for quote in quotes:
+CiteMLA(quotes) 
