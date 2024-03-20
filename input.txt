@@ -1,8 +1,5 @@
 main 
 string quotes
-quotes = "If I was there then i was not here"  
-int a
-a = 12
-print(a)
+quotes = "Test Quote"  
 for quote in quotes:
 CiteMLA(quotes) 
