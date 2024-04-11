@@ -1,5 +1,5 @@
 main 
-string quotes
-quotes = "Test Quote"  
+string[3] quotes
+quotes = ["First Quote", "Second Quote", "Third Quote"]  
 for quote in quotes:
-CiteMLA(quotes) 
+CiteMLA(quote, "book", "John Doe")
