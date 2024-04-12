@@ -1,4 +1,4 @@
-main 
+start 
 string[3] quotes
 quotes = ["First Quote", "Second Quote", "Third Quote"] 
 for quote in quotes:

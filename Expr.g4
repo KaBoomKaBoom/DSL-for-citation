@@ -1,5 +1,5 @@
 grammar Expr;
-program : (method_decl)* 'main' NEWLINE block EOF; 
+program : (method_decl)* 'start' NEWLINE block EOF; 
 method_decl : 'def' id '('type id*')' ':' block 'return'* expr*;
 block : var_decl*  statement*;
 var_decl : type id NEWLINE| ('string[' decimal_literal ']' id) NEWLINE;

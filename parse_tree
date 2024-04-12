@@ -1,12 +1,12 @@
 digraph {
-	0 [label="main
+	0 [label="start
 string[3]quotes
 quotes=[\"FirstQuote\",\"SecondQuote\",\"ThirdQuote\"]
 forquoteinquotes:
 CiteMLA(quote,\"book\",\"JohnDoe\")<missing <INVALID>><EOF>"]
-	1 [label=main]
+	1 [label=start]
 	0 -> 1
-	2 [label=main]
+	2 [label=start]
 	1 -> 2
 	3 [label="
 "]
