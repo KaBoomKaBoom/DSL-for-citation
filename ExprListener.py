@@ -116,15 +116,6 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#math_op.
-    def enterMath_op(self, ctx:ExprParser.Math_opContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#math_op.
-    def exitMath_op(self, ctx:ExprParser.Math_opContext):
-        pass
-
-
     # Enter a parse tree produced by ExprParser#assign_op.
     def enterAssign_op(self, ctx:ExprParser.Assign_opContext):
         pass
