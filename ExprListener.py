@@ -28,11 +28,14 @@ class ExprListener(ParseTreeListener):
 
     # Enter a parse tree produced by ExprParser#var_decl.
     def enterVar_decl(self, ctx:ExprParser.Var_declContext):
-        pass
+        print("Entering variable declaration")
+        var_type = ctx.type_().getText()
+        var_name = ctx.id_().getText()
+        print(f"Type: {var_type}, Name: {var_name}")
 
     # Exit a parse tree produced by ExprParser#var_decl.
     def exitVar_decl(self, ctx:ExprParser.Var_declContext):
-        pass
+        print("Exiting variable declaration")
 
 
     # Enter a parse tree produced by ExprParser#type.
@@ -56,11 +59,9 @@ class ExprListener(ParseTreeListener):
     # Enter a parse tree produced by ExprParser#method_name.
     def enterMethod_name(self, ctx:ExprParser.Method_nameContext):
         pass
-
     # Exit a parse tree produced by ExprParser#method_name.
     def exitMethod_name(self, ctx:ExprParser.Method_nameContext):
         pass
-
 
     # Enter a parse tree produced by ExprParser#expr.
     def enterExpr(self, ctx:ExprParser.ExprContext):
@@ -82,11 +83,14 @@ class ExprListener(ParseTreeListener):
 
     # Enter a parse tree produced by ExprParser#var_assign.
     def enterVar_assign(self, ctx:ExprParser.Var_assignContext):
-        pass
+        print("Entering variable assignment")
+        var_name = ctx.id_().getText()
+        var_value = [string.getText() for string in ctx.string_literal()]
+        print(f"Variable: {var_name}, Value: {var_value}")
 
     # Exit a parse tree produced by ExprParser#var_assign.
     def exitVar_assign(self, ctx:ExprParser.Var_assignContext):
-        pass
+        print("Exiting variable assignment")
 
 
     # Enter a parse tree produced by ExprParser#math_expr.

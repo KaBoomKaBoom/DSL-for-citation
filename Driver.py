@@ -1,6 +1,7 @@
 from antlr4 import *
 from ExprLexer import ExprLexer
 from ExprParser import ExprParser
+from ExprListener import ExprListener
 from antlr4.tree.Trees import Trees
 import graphviz
 
@@ -39,13 +40,17 @@ def main():
     tree = parser.program()  # Replace `your_start_rule` with the actual start rule of your grammar
     
     # Generate parse tree visualization
-    dot_tree, graph, labels = create_parse_tree_dot(tree, parser)
+    # dot_tree, graph, labels = create_parse_tree_dot(tree, parser)
     
     # Save the parse tree visualization as PNG
-    graph.render("parse_tree", format="png", cleanup=True)
-    print("Parse tree visualization saved as parse_tree.png")
+    # graph.render("parse_tree", format="png", cleanup=True)
+    # print("Parse tree visualization saved as parse_tree.png")
 
-    print(Trees.toStringTree(tree, None, parser))
+    # print(Trees.toStringTree(tree, None, parser))
+    listener = ExprListener()
+    walker = ParseTreeWalker()
+    walker.walk(listener, tree)
+
 
 if __name__ == '__main__':
     main()

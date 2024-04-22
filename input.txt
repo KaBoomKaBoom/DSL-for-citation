@@ -1,7 +1,5 @@
-start
-string test
-test = "a + sqrt{5} = 0"
-GenImage(test, "png")
+main
+string quotes
 quotes = ["first quote", "second quote"]
 for q in quotes:
 CiteMLA(q, "book")

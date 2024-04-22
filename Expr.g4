@@ -1,5 +1,5 @@
 grammar Expr;
-program : 'start' NEWLINE block EOF; 
+program : 'main' NEWLINE block EOF; 
 block : (var_decl | statement)+;
 var_decl : type SPACE id NEWLINE | 'string[' decimal_literal ']' SPACE id NEWLINE;
 type : 'int' | 'string';

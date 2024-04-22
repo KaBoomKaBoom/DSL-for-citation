@@ -40,7 +40,7 @@ public class ExprParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'start'", "'string['", "']'", "'int'", "'string'", "'for'", "'in'", 
+			null, "'main'", "'string['", "']'", "'int'", "'string'", "'for'", "'in'", 
 			"':'", "'break'", "'CiteAPA'", "'CiteMLA'", "'CiteCMS'", "'CiteCSE'", 
 			"'CiteISO'", "'CiteIEEE'", "'GenImage'", "'print('", "')'", "','", "'('", 
 			"'['", "'\"'", "'{'", "'}'", "'sqrt'", "'frac'", "'pi'", "'vec'", "'sum'", 

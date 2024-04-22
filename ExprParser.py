@@ -113,7 +113,7 @@ class ExprParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'start'", "'string['", "']'", "'int'", 
+    literalNames = [ "<INVALID>", "'main'", "'string['", "']'", "'int'", 
                      "'string'", "'for'", "'in'", "':'", "'break'", "'CiteAPA'", 
                      "'CiteMLA'", "'CiteCMS'", "'CiteCSE'", "'CiteISO'", 
                      "'CiteIEEE'", "'GenImage'", "'print('", "')'", "','", 
