@@ -1,9 +1,14 @@
+#id, source_type, author, title, place, publisher, year    
+
 # Generated from Expr.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .ExprParser import ExprParser
 else:
     from ExprParser import ExprParser
+    
+from docx import Document
+from docx.shared import Pt
 
 # This class defines a complete listener for a parse tree produced by ExprParser.
 class ExprListener(ParseTreeListener):
@@ -28,14 +33,11 @@ class ExprListener(ParseTreeListener):
 
     # Enter a parse tree produced by ExprParser#var_decl.
     def enterVar_decl(self, ctx:ExprParser.Var_declContext):
-        print("Entering variable declaration")
-        var_type = ctx.type_().getText()
-        var_name = ctx.id_().getText()
-        print(f"Type: {var_type}, Name: {var_name}")
+        pass
 
     # Exit a parse tree produced by ExprParser#var_decl.
     def exitVar_decl(self, ctx:ExprParser.Var_declContext):
-        print("Exiting variable declaration")
+        pass
 
 
     # Enter a parse tree produced by ExprParser#type.
@@ -74,11 +76,19 @@ class ExprListener(ParseTreeListener):
 
     # Enter a parse tree produced by ExprParser#method_call.
     def enterMethod_call(self, ctx:ExprParser.Method_callContext):
-        pass
+        method_name = ctx.method_name().getText()
+        method_args = [arg.getText() for arg in ctx.id_()]
+        for arg in ctx.literal():
+            method_args.append(arg.getText().replace('"', ''))
+        if method_name == "CiteMLA":
+            cite_text,cite_bib = generate_apa_citation(1, *method_args)
+            print(f"Citation: {cite_text}")
+            print(f"Bibliography: {cite_bib}")
 
     # Exit a parse tree produced by ExprParser#method_call.
     def exitMethod_call(self, ctx:ExprParser.Method_callContext):
-        pass
+        print("Exiting method call")
+
 
 
     # Enter a parse tree produced by ExprParser#var_assign.
@@ -182,6 +192,29 @@ class ExprListener(ParseTreeListener):
     def exitString_literal(self, ctx:ExprParser.String_literalContext):
         pass
 
+def generate_apa_citation(index, qouote, source_type, author, year, title, book_title, publisher):
+    #print(qouote, source_type, author, year, title, book_title, publisher)
+    doc = Document()
+        # For in-text citation
+    citation_text = qouote + "(" + author + ", " + str(year) + ")"
+    p = doc.add_paragraph(citation_text)
+    p.style.font.name = 'Times New Roman'
+    p.style.font.size = Pt(12)
+        # For bibliography/reference list
+    citation_bib = f"[{index}]  "+ author + " (" + str(year) + "). " + title + ". "
+    p = doc.add_paragraph(citation_bib)
 
+    if source_type == "book":
+        citation_bib += book_title  + ' ' + publisher + "."
+        p.add_run(book_title + ' ')
+        p.add_run(publisher + ".").italic = True   
+    elif source_type == "journal":
+        citation_bib += book_title  + ' ' + publisher + "."
+        p.add_run(book_title + ' ')
+        p.add_run(publisher + ".").italic = True 
+    elif source_type == "website":
+        citation_bib += book_title  + ' ' + publisher + "."
+    doc.save('test.docx')
+    return citation_text, citation_bib
 
 del ExprParser
