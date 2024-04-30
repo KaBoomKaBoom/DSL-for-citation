@@ -77,9 +77,13 @@ class ExprListener(ParseTreeListener):
         
         # Define a regular expression pattern to match the method name and arguments
         pattern = r'(\w+)\((.*?)\)'
-
+        method_names = ["CiteAPA", "CiteMLA", "CiteCMS", "CiteCSE", "CiteISO", "CiteIEEE"]
         # Use re.findall to find all matches of the pattern in the string
-        matches = re.findall(pattern, qu[9])
+        try:
+            method_name = method_names[9]  # Get the 10th method name
+            matches = re.findall(pattern, qu[9])
+        except IndexError:
+            raise IndexError(f"Incorrect method name. Expected one of: {', '.join(method_names)}")
 
         if matches:
             method_name = matches[0][0]  # Extract method name from the first match
