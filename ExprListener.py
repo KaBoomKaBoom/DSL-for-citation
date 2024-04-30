@@ -1,5 +1,4 @@
 #id, source_type, author, title, place, publisher, year    
-
 # Generated from Expr.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
@@ -11,6 +10,7 @@ from docx import Document
 from docx.shared import Pt
 import datetime
 import re
+import Standards as st
 # This class defines a complete listener for a parse tree produced by ExprParser.
 class ExprListener(ParseTreeListener):
     
@@ -62,17 +62,8 @@ class ExprListener(ParseTreeListener):
                 self.var_value = self.enterVar_assign(var_assign_ctx)
             #print(f"Variable: {self.var_value}")
         elif ctx.for_expr():
-            print("Enter for")
-
-
-                
-        # if "for" in queue:
-        #     #print(self.var_value)
-        #     if any(el in queue[queue.index("in")+5] for el in ['CiteAPA' , 'CiteMLA' , 'CiteCMS' , 'CiteCSE' , 'CiteISO' , 'CiteIEEE'] ):
-        #         for q in self.var_value:
-        #             self.enterExpr(ctx.expr())         
+            print("Enter for")  
           
-
     # Exit a parse tree produced by ExprParser#statement.
     def exitStatement(self, ctx:ExprParser.StatementContext):
         pass
@@ -103,21 +94,21 @@ class ExprListener(ParseTreeListener):
         if method_name == "CiteAPA":
             for el in self.var_value:
                 method_args[0] = el
-                cite_text,cite_bib = generate_apa_citation(*method_args)
+                cite_text,cite_bib = st.Standards.generate_apa_citation(*method_args)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteMLA":
             for el in self.var_value:
                 method_args[0] = el
-                cite_text,cite_bib = generate_mla_citation(*method_args, index)
+                cite_text,cite_bib = st.Standards.generate_mla_citation(*method_args)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteCMS":
             for el in self.var_value:
                 method_args[0] = el
-                cite_text,cite_bib = generate_cms_citation(*method_args, index)
+                cite_text,cite_bib = st.Standardsgenerate_cms_citation(*method_args)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
@@ -125,12 +116,29 @@ class ExprListener(ParseTreeListener):
             index = 1
             for el in self.var_value:
                 method_args[0] = el
-                cite_text,cite_bib = generate_cse_citation(*method_args, index)
+                cite_text,cite_bib = st.Standards.generate_cse_citation(*method_args, index)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
                 index+=1
-
+        elif method_name == "CiteISO":
+            index = 1
+            for el in self.var_value:
+                method_args[0] = el
+                cite_text,cite_bib = st.Standards.cite_iso(*method_args, index)
+                print(f"Citation: {cite_text}")
+                print(f"Bibliography: {cite_bib}")
+                print('----------------------------')
+                index+=1
+        elif method_name == "CiteIEEE":
+            index = 1
+            for el in self.var_value:
+                method_args[0] = el
+                cite_text,cite_bib = st.Standards.cite_ieee(*method_args, index)
+                print(f"Citation: {cite_text}")
+                print(f"Bibliography: {cite_bib}")
+                print('----------------------------')
+                index+=1
 
 
     def exitFor_expr(self, ctx:ExprParser.For_exprContext):
@@ -160,26 +168,6 @@ class ExprListener(ParseTreeListener):
         method_args = [arg.getText() for arg in ctx.id_()]
         for arg in ctx.literal():
             method_args.append(arg.getText().replace('"', ''))
-        # if method_name == "CiteAPA":
-        #     cite_text,cite_bib = generate_apa_citation(*method_args)
-        #     # print(f"Citation: {cite_text}")
-        #     # print(f"Bibliography: {cite_bib}")
-        #     return cite_text, cite_bib
-        # elif method_name == "CiteMLA":
-        #     cite_text,cite_bib = generate_mla_citation(*method_args)
-        #     print(f"Citation: {cite_text}")
-        #     print(f"Bibliography: {cite_bib}")
-        #     return cite_text, cite_bib
-        # elif method_name == "CiteCMS":
-        #     cite_text,cite_bib = generate_cms_citation(*method_args)
-        #     print(f"Citation: {cite_text}")
-        #     print(f"Bibliography: {cite_bib}")
-        #     return cite_text, cite_bib
-        # elif method_name == "CiteCSE":
-        #     cite_text,cite_bib = generate_cse_citation(*method_args)
-        #     print(f"Citation: {cite_text}")
-        #     print(f"Bibliography: {cite_bib}")
-        #     return cite_text, cite_bib
 
     # Exit a parse tree produced by ExprParser#method_call.
     def exitMethod_call(self, ctx:ExprParser.Method_callContext):
@@ -288,163 +276,5 @@ class ExprListener(ParseTreeListener):
     # Exit a parse tree produced by ExprParser#string_literal.
     def exitString_literal(self, ctx:ExprParser.String_literalContext):
         pass
-
-def generate_apa_citation(qouote, source_type, author, year, title, book_title, publisher):
-    #print(qouote, source_type, author, year, title, book_title, publisher)
-    doc = Document("test.docx")
-        # For in-text citation
-    citation_text = qouote + "(" + author + ", " + str(year) + ")"
-    run = doc.add_paragraph()
-    run = run.add_run(citation_text)
-    font = run.font
-    font.name = 'Times New Roman'
-    font.size = Pt(12)
-        # For bibliography/reference list
-    citation_bib = author + " (" + str(year) + "). " + title + ". "
-
-
-    if source_type == "book":
-        citation_bib += book_title  + ' ' + publisher + "."
-        run = doc.add_paragraph
-        run = run.add_run(citation_bib)
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-    elif source_type == "journal":
-        citation_bib += book_title  + ' ' + publisher + "."
-        run = doc.add_paragraph
-        run = run.add_run(citation_bib)
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-    elif source_type == "website":
-        run = doc.add_paragraph
-        run = run.add_run(citation_bib)
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-    doc.save('test.docx')
-    return citation_text, citation_bib
-
-def generate_mla_citation(qouote, source_type, author, year, title, book_title, publisher):
-    #print(qouote, source_type, author, year, title, book_title, publisher)
-    doc = Document("test.docx")
-        # For in-text citation
-    citation_text = f"{qouote} ({author})."
-    run = doc.add_paragraph()
-    run = run.add_run(citation_text)
-    font = run.font
-    font.name = 'Times New Roman'
-    font.size = Pt(12)
-        # For bibliography/reference list
-    citation_bib = author + '"' + title + '."'
-    
-
-    if source_type == "book":
-        citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f'{author} \"{title}.\"{book_title}, {publisher}, {str(year)}.')
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-    elif source_type == "journal":
-        citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f'{author} \"{title}.\"{book_title}, {publisher}, {str(year)}.')
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-         
-    elif source_type == "website":
-        citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f'{author} \"{title}.\"{book_title}, {publisher}, {str(year)}.')
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-    doc.save('test.docx')
-    return citation_text, citation_bib
-
-def generate_cms_citation(qouote, source_type, author, year, title='', book_title='', publisher='', link=''):
-    #print(qouote, source_type, author, year, title, book_title, publisher)
-    doc = Document("test.docx")
-        # For in-text citation
-    citation_text = f"{qouote} ({author} {str(year)})."
-    run = doc.add_paragraph()
-    run = run.add_run(citation_text)
-    font = run.font
-    font.name = 'Times New Roman'
-    font.size = Pt(12)
-
-        # For bibliography/reference list
-    citation_bib = author + ". "
-
-    if source_type == "book":
-        citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f"{author}. \"{book_title},\" {publisher}, {str(year)}.")
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-
-    elif source_type == "journal":
-        citation_bib += '"' + book_title  + '," ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f"{author}. \"{book_title},\" {publisher}, {str(year)}.")
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-
-    elif source_type == "website":
-        date = datetime.datetime.now()
-        citation_bib += title  + ', ' + publisher + ', ' + 'accessed ' + date.strftime("%d %b %Y") + ", " +  link + "."
-        run = doc.add_paragraph()
-        run = run.add_run(f"{author}. {title}, {publisher}, accessed {date.strftime('%d %b %Y')}, {link}.")
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-
-    doc.save('test.docx')
-    return citation_text, citation_bib
-
-def generate_cse_citation(qouote, source_type, author, year,  book_title='', title='', publisher='', link='', index = None):
-    #print(qouote, source_type, author, year, title, book_title, publisher)
-    doc = Document("test.docx")
-        # For in-text citation superscript the number of the citation
-    citation_text = qouote + ' ' + str(index) + "."
-    run = doc.add_paragraph()
-    run = run.add_run(qouote + "[" + str(index) + "]")
-    font = run.font
-    font.name = 'Times New Roman'
-    font.size = Pt(12)
-        # For bibliography/reference list
-    citation_bib = author  
-
-    if source_type == "book":
-        citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f"{author}{book_title}. {publisher}; {str(year)}.")
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-
-    elif source_type == "journal":
-        citation_bib += '"' + book_title  + '," ' + publisher + ', ' + str(year) +  "."
-        run = doc.add_paragraph()
-        run = run.add_run(f"{author} {book_title}. {publisher}. {str(year)}")
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-
-    elif source_type == "website":
-        date = datetime.datetime.now()
-        citation_bib += title  + ', ' + publisher + '. ' + str(year) +', ' + '[accessed ' + date.strftime("%d %b %Y") + "]; " +  link + "."
-        run = doc.add_paragraph()
-        run = run.add_run(f"{author} {title}. {publisher}. {str(year)} [accesed {date.strftime("%d %b %Y")}]; {link}.")
-        font = run.font
-        font.name = 'Times New Roman'
-        font.size = Pt(12)
-    doc.save('test.docx')
-    return citation_text, citation_bib
 
 del ExprParser

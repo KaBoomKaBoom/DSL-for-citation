@@ -1,4 +1,4 @@
 main
 quotes = ["first quote", "second quote"]
 for q in quotes:
-CiteMLA(q, "website", "Sample Author", 2010, "Sample Title", "BookTitle", "Sample Publisher")
+CiteIEEE(q, "website", "Sample Author", 2010, "Sample Title", "BookTitle", "Sample Publisher", "Sample Link")

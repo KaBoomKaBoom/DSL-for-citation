@@ -1,28 +1,42 @@
 from docx import Document
 from docx.shared import Pt
+import datetime
+
 class Standards:
     def generate_apa_citation(qouote, source_type, author, year, title, book_title, publisher):
-    #print(qouote, source_type, author, year, title, book_title, publisher)
+        #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation
         citation_text = qouote + "(" + author + ", " + str(year) + ")"
-        p = doc.add_paragraph(citation_text)
-        p.style.font.name = 'Times New Roman'
-        p.style.font.size = Pt(12)
+        run = doc.add_paragraph()
+        run = run.add_run(citation_text)
+        font = run.font
+        font.name = 'Times New Roman'
+        font.size = Pt(12)
             # For bibliography/reference list
         citation_bib = author + " (" + str(year) + "). " + title + ". "
-        p = doc.add_paragraph(citation_bib)
+
 
         if source_type == "book":
             citation_bib += book_title  + ' ' + publisher + "."
-            p.add_run(book_title + ' ')
-            p.add_run(publisher + ".").italic = True   
+            run = doc.add_paragraph
+            run = run.add_run(citation_bib)
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
         elif source_type == "journal":
             citation_bib += book_title  + ' ' + publisher + "."
-            p.add_run(book_title + ' ')
-            p.add_run(publisher + ".").italic = True 
+            run = doc.add_paragraph
+            run = run.add_run(citation_bib)
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
         elif source_type == "website":
-            citation_bib += book_title  + ' ' + publisher + "."
+            run = doc.add_paragraph
+            run = run.add_run(citation_bib)
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
         doc.save('test.docx')
         return citation_text, citation_bib
 
@@ -30,30 +44,38 @@ class Standards:
         #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation
-        citation_text = qouote + " (" + author + ")."
-        p = doc.add_paragraph(citation_text)
-        p.style.font.name = 'Times New Roman'
-        p.style.font.size = Pt(12)
+        citation_text = f"{qouote} ({author})."
+        run = doc.add_paragraph()
+        run = run.add_run(citation_text)
+        font = run.font
+        font.name = 'Times New Roman'
+        font.size = Pt(12)
             # For bibliography/reference list
         citation_bib = author + '"' + title + '."'
-        p = doc.add_paragraph(citation_bib)
+        
 
         if source_type == "book":
             citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-            p.add_run(book_title + ', ').italic = True
-            p.add_run(publisher + ", ")
-            p.add_run(str(year) + ".") 
+            run = doc.add_paragraph()
+            run = run.add_run(f'{author} \"{title}.\"{book_title}, {publisher}, {str(year)}.')
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
         elif source_type == "journal":
             citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-            p.add_run(book_title + ', ').italic = True
-            p.add_run(publisher + ", ")
-            p.add_run(str(year) + ".")
+            run = doc.add_paragraph()
+            run = run.add_run(f'{author} \"{title}.\"{book_title}, {publisher}, {str(year)}.')
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
             
         elif source_type == "website":
             citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-            p.add_run(book_title + ', ').italic = True
-            p.add_run(publisher + ", ")
-            p.add_run(str(year) + ".")
+            run = doc.add_paragraph()
+            run = run.add_run(f'{author} \"{title}.\"{book_title}, {publisher}, {str(year)}.')
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
         doc.save('test.docx')
         return citation_text, citation_bib
 
@@ -61,34 +83,41 @@ class Standards:
         #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation
-        citation_text = qouote + " (" + author + " " + str(year) + ")."
-        p = doc.add_paragraph(citation_text)
-        p.style.font.name = 'Times New Roman'
-        p.style.font.size = Pt(12)
+        citation_text = f"{qouote} ({author} {str(year)})."
+        run = doc.add_paragraph()
+        run = run.add_run(citation_text)
+        font = run.font
+        font.name = 'Times New Roman'
+        font.size = Pt(12)
+
             # For bibliography/reference list
         citation_bib = author + ". "
 
         if source_type == "book":
-            p = doc.add_paragraph(citation_bib)
             citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-            p.add_run(book_title + '. ').italic = True
-            p.add_run(publisher + ", ")
-            p.add_run(str(year) + ".") 
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. \"{book_title},\" {publisher}, {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
         elif source_type == "journal":
-            p = doc.add_paragraph(citation_bib)
             citation_bib += '"' + book_title  + '," ' + publisher + ', ' + str(year) +  "."
-            p.add_run('"' + book_title + '," ')
-            p.add_run(publisher + ", ")
-            p.add_run(str(year) + ".")
-            
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. \"{book_title},\" {publisher}, {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
         elif source_type == "website":
             date = datetime.datetime.now()
-            p = doc.add_paragraph(citation_bib)
             citation_bib += title  + ', ' + publisher + ', ' + 'accessed ' + date.strftime("%d %b %Y") + ", " +  link + "."
-            p.add_run(title + ', ')
-            p.add_run(publisher + ", ")
-            p.add_run( 'accessed ' + date.strftime("%d %b %Y") + ", ")
-            p.add_run(link + ".")
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. {title}, {publisher}, accessed {date.strftime('%d %b %Y')}, {link}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
         doc.save('test.docx')
         return citation_text, citation_bib
 
@@ -97,34 +126,116 @@ class Standards:
         doc = Document("test.docx")
             # For in-text citation superscript the number of the citation
         citation_text = qouote + ' ' + str(index) + "."
-        p = doc.add_paragraph(qouote )
-        index_run = p.add_run(str(index))
-        index_run.superscript = True
-        p.add_run('.')
-        p.style.font.name = 'Times New Roman'
-        p.style.font.size = Pt(12)
+        run = doc.add_paragraph()
+        run = run.add_run(qouote + "[" + str(index) + "]")
+        font = run.font
+        font.name = 'Times New Roman'
+        font.size = Pt(12)
             # For bibliography/reference list
         citation_bib = author  
 
         if source_type == "book":
             citation_bib += book_title  + ', ' + publisher + ', ' + str(year) +  "."
-            p = doc.add_paragraph(citation_bib)
-            p.add_run(book_title + '. ')
-            p.add_run(publisher + "; ")
-            p.add_run(str(year) + ".") 
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}{book_title}. {publisher}; {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
         elif source_type == "journal":
             citation_bib += '"' + book_title  + '," ' + publisher + ', ' + str(year) +  "."
-            p.add_run(book_title + '. ')
-            p.add_run(publisher + ", ")
-            p.add_run(str(year) + ".")
-            
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author} {book_title}. {publisher}. {str(year)}")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
         elif source_type == "website":
             date = datetime.datetime.now()
             citation_bib += title  + ', ' + publisher + '. ' + str(year) +', ' + '[accessed ' + date.strftime("%d %b %Y") + "]; " +  link + "."
-            p = doc.add_paragraph(author)
-            p.add_run(title + '. ')
-            p.add_run(publisher + ". " + str(year))
-            p.add_run( '[accessed ' + date.strftime("%d %b %Y") + "]; ")
-            p.add_run(link + ".")
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author} {title}. {publisher}. {str(year)} [accesed {date.strftime("%d %b %Y")}]; {link}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+        doc.save('test.docx')
+        return citation_text, citation_bib
+
+    def cite_iso(qouote, source_type, author, year,  book_title='', title='', publisher='', link='', index = None):
+        #print(qouote, source_type, author, year, title, book_title, publisher)
+        doc = Document("test.docx")
+            # For in-text citation superscript the number of the citation
+        citation_text = qouote + ' [' + str(index) + "]."
+        run = doc.add_paragraph()
+        run = run.add_run(qouote + "[" + str(index) + "]")
+        font = run.font
+        font.name = 'Times New Roman'
+        font.size = Pt(12)
+            # For bibliography/reference list
+        citation_bib = author + '. ' 
+
+        if source_type == "book":
+            citation_bib += book_title  + '. ' + publisher + ', ' + str(year) +  "."
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
+        elif source_type == "journal":
+            citation_bib += '\"' + book_title  + ',\" ' + publisher + ', ' + str(year) +  "."
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
+        elif source_type == "website":
+            date = datetime.datetime.now()
+            citation_bib += f'{title}. {publisher}. {str(year)}. Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.'
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}, \"{title}\". {publisher}. {str(year)} Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+        doc.save('test.docx')
+        return citation_text, citation_bib
+    
+    def cite_ieee(qouote, source_type, author, year,  book_title='', title='', publisher='', link='', index = None):
+        doc = Document("test.docx")
+            # For in-text citation superscript the number of the citation
+        citation_text = qouote + ' [' + str(index) + "]."
+        run = doc.add_paragraph()
+        run = run.add_run(qouote + "[" + str(index) + "]")
+        font = run.font
+        font.name = 'Times New Roman'
+        font.size = Pt(12)
+            # For bibliography/reference list
+        citation_bib = author + '. ' 
+
+        if source_type == "book":
+            citation_bib += book_title  + '. ' + publisher + ', ' + str(year) +  "."
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
+        elif source_type == "journal":
+            citation_bib += '"' + book_title  + '," ' + publisher + ', ' + str(year) +  "."
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
+
+        elif source_type == "website":
+            date = datetime.datetime.now()
+            citation_bib += title  + ', ' + publisher + '. ' + str(year) +', ' + '[accessed ' + date.strftime("%d %b %Y") + "]; " +  link + "."
+            run = doc.add_paragraph()
+            run = run.add_run(f"{author}, {title}. {publisher}. {str(year)} Available: {link} [Accesed Date {date.strftime("%d %b %Y")}].")
+            font = run.font
+            font.name = 'Times New Roman'
+            font.size = Pt(12)
         doc.save('test.docx')
         return citation_text, citation_bib
