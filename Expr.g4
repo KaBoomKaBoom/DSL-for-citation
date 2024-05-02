@@ -3,7 +3,7 @@ program : 'main' NEWLINE block EOF;
 block : (var_decl | statement)+;
 var_decl : type SPACE id NEWLINE | 'string[' decimal_literal ']' SPACE id NEWLINE;
 type : 'int' | 'string';
-statement :  (var_assign NEWLINE)+ | (expr NEWLINE)+ | for_expr|'break' ;
+statement :  (var_assign NEWLINE)+ | (expr NEWLINE)+ | for_expr |'break' ;
 for_expr : 'for' SPACE id SPACE 'in' SPACE id ':' NEWLINE method_call+;
 method_name : 'CiteAPA' | 'CiteMLA' | 'CiteCMS' | 'CiteCSE' | 'CiteISO' | 'CiteIEEE' | 'GenImage';
 expr : literal |'print(' id ')' | id | (literal ',' literal)  ;

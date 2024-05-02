@@ -1,4 +1,5 @@
 main
 quotes = ["first quote", "second quote"]
+sourceType = "website"
 for q in quotes:
-CiteIEE(q, "website", "Sample Author", 2010, "Sample Title", "BookTitle", "Sample Publisher", "Sample Link")
+CiteISO(q, "website", "Sample Author", 2010, "Sample Title", "BookTitle", "Sample Publisher", "Sample Link")

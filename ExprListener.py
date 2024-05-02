@@ -15,7 +15,14 @@ import Standards as st
 class ExprListener(ParseTreeListener):
     
     def __init__(self):
-        self.var_value = None
+        self.quotes = None
+        self.source_type = None
+        self.author = None
+        self.year = None
+        self.title = None
+        self.book_title = None
+        self.publisher = None
+        self.link = None
     # Enter a parse tree produced by ExprParser#program.
     def enterProgram(self, ctx:ExprParser.ProgramContext):
         pass
@@ -56,10 +63,10 @@ class ExprListener(ParseTreeListener):
     def enterStatement(self, ctx:ExprParser.StatementContext):
         # print("Entering statement")
         queue=[child.getText() for child in ctx.children]
-        # print(queue)
+        print(queue)
         if ctx.var_assign():
             for var_assign_ctx in ctx.var_assign():
-                self.var_value = self.enterVar_assign(var_assign_ctx)
+                self.quotes = self.enterVar_assign(var_assign_ctx)
             #print(f"Variable: {self.var_value}")
         elif ctx.for_expr():
             print("Enter for")  
@@ -71,16 +78,13 @@ class ExprListener(ParseTreeListener):
     def enterFor_expr(self, ctx:ExprParser.For_exprContext):
         qu = [child.getText() for child in ctx.children]
         print(qu)
-        for qu[2] in self.var_value:
-            #print(qu[2])
-            pass
         
         # Define a regular expression pattern to match the method name and arguments
         pattern = r'(\w+)\((.*?)\)'
         method_names = ["CiteAPA", "CiteMLA", "CiteCMS", "CiteCSE", "CiteISO", "CiteIEEE"]
         # Use re.findall to find all matches of the pattern in the string
         try:
-            method_name = method_names[9]  # Get the 10th method name
+            method_name = method_names[5]  # Get the 10th method name
             matches = re.findall(pattern, qu[9])
         except IndexError:
             raise IndexError(f"Incorrect method name. Expected one of: {', '.join(method_names)}")
@@ -96,21 +100,21 @@ class ExprListener(ParseTreeListener):
             print("Arguments:", method_args)
             
         if method_name == "CiteAPA":
-            for el in self.var_value:
+            for el in self.quotes:
                 method_args[0] = el
                 cite_text,cite_bib = st.Standards.generate_apa_citation(*method_args)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteMLA":
-            for el in self.var_value:
+            for el in self.quotes:
                 method_args[0] = el
                 cite_text,cite_bib = st.Standards.generate_mla_citation(*method_args)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteCMS":
-            for el in self.var_value:
+            for el in self.quotes:
                 method_args[0] = el
                 cite_text,cite_bib = st.Standardsgenerate_cms_citation(*method_args)
                 print(f"Citation: {cite_text}")
@@ -118,7 +122,7 @@ class ExprListener(ParseTreeListener):
                 print('----------------------------')
         elif method_name == "CiteCSE":
             index = 1
-            for el in self.var_value:
+            for el in self.quotes:
                 method_args[0] = el
                 cite_text,cite_bib = st.Standards.generate_cse_citation(*method_args, index)
                 print(f"Citation: {cite_text}")
@@ -127,7 +131,7 @@ class ExprListener(ParseTreeListener):
                 index+=1
         elif method_name == "CiteISO":
             index = 1
-            for el in self.var_value:
+            for el in self.quotes:
                 method_args[0] = el
                 cite_text,cite_bib = st.Standards.cite_iso(*method_args, index)
                 print(f"Citation: {cite_text}")
@@ -136,7 +140,7 @@ class ExprListener(ParseTreeListener):
                 index+=1
         elif method_name == "CiteIEEE":
             index = 1
-            for el in self.var_value:
+            for el in self.quotes:
                 method_args[0] = el
                 cite_text,cite_bib = st.Standards.cite_ieee(*method_args, index)
                 print(f"Citation: {cite_text}")
@@ -181,11 +185,35 @@ class ExprListener(ParseTreeListener):
     # Enter a parse tree produced by ExprParser#var_assign.
     def enterVar_assign(self, ctx:ExprParser.Var_assignContext):
         #print("Entering variable assignment")
-        #var_name = ctx.id_().getText()
-        var_value = [string.getText() for string in ctx.string_literal()]
-        var_value = [el.replace('"', '') for el in var_value]  
-        #print(f"Variable: {var_name}, Value: {var_value}")
-        return var_value
+        var_name = ctx.id_().getText()
+        print(var_name) 
+        if var_name == "quotes":
+            self.quotes = [string.getText() for string in ctx.string_literal()]
+            self.quotes = [el.replace('"', '') for el in self.quotes]  
+            #print(f"Variable: {var_name}, Value: {var_value}")
+        elif var_name == "sourceType":
+            self.source_type = [string.getText().replace('"', '') for string in ctx.string_literal()]
+        elif var_name == "author":
+            self.author = ctx.string_literal().getText().replace('"', '')
+        
+        elif var_name == "year":
+            self.year = ctx.string_literal().getText().replace('"', '')
+
+        elif var_name == "title":
+            self.title = ctx.string_literal().getText().replace('"', '')
+
+        elif var_name == "bookTitle":
+            self.book_title = ctx.string_literal().getText().replace('"', '')
+
+        elif var_name == "publisher":
+            self.publisher = ctx.string_literal().getText().replace('"', '')
+
+        elif var_name == "link":
+            self.link = ctx.string_literal().getText().replace('"', '')
+
+        else:
+            raise IndexError(f"Incorrect method name. Expected one of: {[ "quotes", "source_type", "author", "year", "title", "book_title", "publisher", "link"]}")
+
 
     # Exit a parse tree produced by ExprParser#var_assign.
     def exitVar_assign(self, ctx:ExprParser.Var_assignContext):
