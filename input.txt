@@ -1,5 +1,11 @@
 main
-quotes = ["first quote", "second quote"]
-sourceType = "website"
+quotes = ["Scientific writing is a cornerstone of scholarly communication, facilitating the dissemination of knowledge, discoveries, and advancements across various disciplines.",
+"Scientific writing encompasses various genres, including research papers, reviews, and technical reports"]
+sourceType = ["website"]
+author = "Berco A"
+year = 2010
+title = "DSL: Scientific text processing"
+publisher = "TUM"
+link = "www.overleaf/PBLTeam_6"
 for q in quotes:
-CiteISO(q, "website", "Sample Author", 2010, "Sample Title", "BookTitle", "Sample Publisher", "Sample Link")
+CiteISO(q, sourceType, author, year, title, "", publisher, link)

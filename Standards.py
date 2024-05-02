@@ -79,7 +79,7 @@ class Standards:
         doc.save('test.docx')
         return citation_text, citation_bib
 
-    def generate_cms_citation(qouote, source_type, author, year, title='', book_title='', publisher='', link=''):
+    def generate_cms_citation(qouote, source_type, author, year, title, book_title, publisher, link):
         #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation
@@ -121,7 +121,7 @@ class Standards:
         doc.save('test.docx')
         return citation_text, citation_bib
 
-    def generate_cse_citation(qouote, source_type, author, year,  book_title='', title='', publisher='', link='', index = None):
+    def generate_cse_citation(qouote, source_type, author, year,  book_title, title, publisher, link, index):
         #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation superscript the number of the citation
@@ -161,23 +161,23 @@ class Standards:
         doc.save('test.docx')
         return citation_text, citation_bib
 
-    def cite_iso(qouote, source_type, author, year,  book_title='', title='', publisher='', link='', index = None):
+    def cite_iso(qouote, source_type, author, year,  title, book_title,  publisher, link, index):
         #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation superscript the number of the citation
         citation_text = qouote + ' [' + str(index) + "]."
         run = doc.add_paragraph()
-        run = run.add_run(qouote + "[" + str(index) + "]")
+        run = run.add_run(citation_text)
         font = run.font
         font.name = 'Times New Roman'
         font.size = Pt(12)
             # For bibliography/reference list
-        citation_bib = author + '. ' 
+        citation_bib = f'[{str(index)}]  ' + author + '. ' 
 
         if source_type == "book":
             citation_bib += book_title  + '. ' + publisher + ', ' + str(year) +  "."
             run = doc.add_paragraph()
-            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            run = run.add_run(f"[{str(index)}]  {author}. {book_title}. {publisher}; {str(year)}.")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)
@@ -185,7 +185,7 @@ class Standards:
         elif source_type == "journal":
             citation_bib += '\"' + book_title  + ',\" ' + publisher + ', ' + str(year) +  "."
             run = doc.add_paragraph()
-            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            run = run.add_run(f"[{str(index)}]  {author}. {book_title}. {publisher}; {str(year)}.")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)
@@ -194,14 +194,14 @@ class Standards:
             date = datetime.datetime.now()
             citation_bib += f'{title}. {publisher}. {str(year)}. Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.'
             run = doc.add_paragraph()
-            run = run.add_run(f"{author}, \"{title}\". {publisher}. {str(year)} Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.")
+            run = run.add_run(f"[{str(index)}]  {author}, \"{title}\". {publisher}. {str(year)} Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)
         doc.save('test.docx')
         return citation_text, citation_bib
     
-    def cite_ieee(qouote, source_type, author, year,  book_title='', title='', publisher='', link='', index = None):
+    def cite_ieee(qouote, source_type, author, year,  book_title, title, publisher, link, index = None):
         doc = Document("test.docx")
             # For in-text citation superscript the number of the citation
         citation_text = qouote + ' [' + str(index) + "]."
@@ -216,7 +216,7 @@ class Standards:
         if source_type == "book":
             citation_bib += book_title  + '. ' + publisher + ', ' + str(year) +  "."
             run = doc.add_paragraph()
-            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            run = run.add_run(f"[{str(index)}]  {author}. {book_title}. {publisher}; {str(year)}.")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)
@@ -224,7 +224,7 @@ class Standards:
         elif source_type == "journal":
             citation_bib += '"' + book_title  + '," ' + publisher + ', ' + str(year) +  "."
             run = doc.add_paragraph()
-            run = run.add_run(f"{author}. {book_title}. {publisher}; {str(year)}.")
+            run = run.add_run(f"[{str(index)}]  {author}. {book_title}. {publisher}; {str(year)}.")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)
@@ -233,7 +233,7 @@ class Standards:
             date = datetime.datetime.now()
             citation_bib += title  + ', ' + publisher + '. ' + str(year) +', ' + '[accessed ' + date.strftime("%d %b %Y") + "]; " +  link + "."
             run = doc.add_paragraph()
-            run = run.add_run(f"{author}, {title}. {publisher}. {str(year)} Available: {link} [Accesed Date {date.strftime("%d %b %Y")}].")
+            run = run.add_run(f"[{str(index)}]  {author}, {title}. {publisher}. {str(year)} Available: {link} [Accesed Date {date.strftime("%d %b %Y")}].")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)

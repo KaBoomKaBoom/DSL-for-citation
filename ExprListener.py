@@ -17,12 +17,12 @@ class ExprListener(ParseTreeListener):
     def __init__(self):
         self.quotes = None
         self.source_type = None
-        self.author = None
+        self.author = ''
         self.year = None
-        self.title = None
-        self.book_title = None
-        self.publisher = None
-        self.link = None
+        self.title = ''
+        self.book_title = ''
+        self.publisher = ''
+        self.link = ''
     # Enter a parse tree produced by ExprParser#program.
     def enterProgram(self, ctx:ExprParser.ProgramContext):
         pass
@@ -63,13 +63,11 @@ class ExprListener(ParseTreeListener):
     def enterStatement(self, ctx:ExprParser.StatementContext):
         # print("Entering statement")
         queue=[child.getText() for child in ctx.children]
-        print(queue)
+        #print(queue)
         if ctx.var_assign():
             for var_assign_ctx in ctx.var_assign():
                 self.quotes = self.enterVar_assign(var_assign_ctx)
-            #print(f"Variable: {self.var_value}")
-        elif ctx.for_expr():
-            print("Enter for")  
+            #print(f"Variable: {self.var_value}")  
           
     # Exit a parse tree produced by ExprParser#statement.
     def exitStatement(self, ctx:ExprParser.StatementContext):
@@ -77,7 +75,7 @@ class ExprListener(ParseTreeListener):
 
     def enterFor_expr(self, ctx:ExprParser.For_exprContext):
         qu = [child.getText() for child in ctx.children]
-        print(qu)
+        #print(qu)
         
         # Define a regular expression pattern to match the method name and arguments
         pattern = r'(\w+)\((.*?)\)'
@@ -96,9 +94,17 @@ class ExprListener(ParseTreeListener):
             # Trim any whitespace from arguments
             method_args = [arg.strip() for arg in method_args]
             method_args = [arg.replace('"', '') for arg in method_args]
-            print("Method Name:", method_name)
-            print("Arguments:", method_args)
+            # print("Method Name:", method_name)
+            # print("Arguments:", method_args)
             
+            method_args[1] = ''.join(self.source_type)
+            method_args[2] = ''.join(self.author)
+            method_args[3] = ''.join(self.year)
+            method_args[4] = ''.join(self.title)
+            method_args[5] = ''.join(self.book_title)
+            method_args[6] = ''.join(self.publisher)
+            method_args[7] = ''.join(self.link)
+
         if method_name == "CiteAPA":
             for el in self.quotes:
                 method_args[0] = el
@@ -186,30 +192,34 @@ class ExprListener(ParseTreeListener):
     def enterVar_assign(self, ctx:ExprParser.Var_assignContext):
         #print("Entering variable assignment")
         var_name = ctx.id_().getText()
-        print(var_name) 
+
         if var_name == "quotes":
             self.quotes = [string.getText() for string in ctx.string_literal()]
             self.quotes = [el.replace('"', '') for el in self.quotes]  
             #print(f"Variable: {var_name}, Value: {var_value}")
         elif var_name == "sourceType":
+            # print(var_name) 
             self.source_type = [string.getText().replace('"', '') for string in ctx.string_literal()]
+            self.source_type = ''.join(self.source_type)
+            # print(self.source_type)
         elif var_name == "author":
-            self.author = ctx.string_literal().getText().replace('"', '')
+            self.author = [string.getText().replace('"', '') for string in ctx.string_literal()]
         
         elif var_name == "year":
-            self.year = ctx.string_literal().getText().replace('"', '')
+            self.year = ctx.int_literal().getText()
 
         elif var_name == "title":
-            self.title = ctx.string_literal().getText().replace('"', '')
+            self.title = [string.getText().replace('"', '') for string in ctx.string_literal()]
+            # print(self.title)
 
         elif var_name == "bookTitle":
-            self.book_title = ctx.string_literal().getText().replace('"', '')
+            self.book_title = [string.getText().replace('"', '') for string in ctx.string_literal()]
 
         elif var_name == "publisher":
-            self.publisher = ctx.string_literal().getText().replace('"', '')
+            self.publisher = [string.getText().replace('"', '') for string in ctx.string_literal()]
 
         elif var_name == "link":
-            self.link = ctx.string_literal().getText().replace('"', '')
+            self.link = [string.getText().replace('"', '') for string in ctx.string_literal()]
 
         else:
             raise IndexError(f"Incorrect method name. Expected one of: {[ "quotes", "source_type", "author", "year", "title", "book_title", "publisher", "link"]}")
