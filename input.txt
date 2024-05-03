@@ -1,7 +1,8 @@
 main
 quotes = ["Scientific writing is a cornerstone of scholarly communication, facilitating the dissemination of knowledge, discoveries, and advancements across various disciplines.",
-"Scientific writing encompasses various genres, including research papers, reviews, and technical reports"]
-sourceType = ["website"]
+"Scientific writing encompasses various genres, including research papers, reviews, and technical reports",
+"Speechwriters and public relations professionals, comprising roughly 8 per-cents of the target audience, demand precision and efficacy"]
+sourceType = "website"
 author = "Berco A"
 year = 2010
 title = "DSL: Scientific text processing"

@@ -121,7 +121,7 @@ class Standards:
         doc.save('test.docx')
         return citation_text, citation_bib
 
-    def generate_cse_citation(qouote, source_type, author, year,  book_title, title, publisher, link, index):
+    def generate_cse_citation(qouote, source_type, author, year, title, book_title, publisher, link, index):
         #print(qouote, source_type, author, year, title, book_title, publisher)
         doc = Document("test.docx")
             # For in-text citation superscript the number of the citation
@@ -201,7 +201,7 @@ class Standards:
         doc.save('test.docx')
         return citation_text, citation_bib
     
-    def cite_ieee(qouote, source_type, author, year,  book_title, title, publisher, link, index = None):
+    def cite_ieee(qouote, source_type, author, year,  title, book_title,  publisher, link, index = None):
         doc = Document("test.docx")
             # For in-text citation superscript the number of the citation
         citation_text = qouote + ' [' + str(index) + "]."
