@@ -20,7 +20,7 @@ id : CHAR char_num*;
 char_num : CHAR | DIGIT;
 int_literal : decimal_literal;
 decimal_literal : DIGIT DIGIT*;
-string_literal : '"'((CHAR | ':' | '/' | '-' | ',' | '_' | '.' | DIGIT) SPACE?)*'"';
+string_literal : '"'((CHAR | ':' | '/' | '-' | ',' | '_' | '.' | DIGIT | '=' | '?') SPACE?)*'"';
 CHAR : [a-zA-Z]+;
 DIGIT : [0-9]+;
 NEWLINE : [\r\n]+ ;
