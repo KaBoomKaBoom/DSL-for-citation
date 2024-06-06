@@ -11,12 +11,14 @@ from docx.shared import Pt
 import datetime
 import re
 import Standards as st
+import WebParser as wp
+
 # This class defines a complete listener for a parse tree produced by ExprParser.
 class ExprListener(ParseTreeListener):
     
     def __init__(self):
         self.quotes = None
-        self.source_type = None
+        self.source_type = "website"
         self.author = ''
         self.year = None
         self.title = ''
@@ -97,13 +99,16 @@ class ExprListener(ParseTreeListener):
             # print("Method Name:", method_name)
             # print("Arguments:", method_args)
             
-            method_args[1] = ''.join(self.source_type)
-            method_args[2] = ''.join(self.author)
-            method_args[3] = ''.join(self.year)
-            method_args[4] = ''.join(self.title)
-            method_args[5] = ''.join(self.book_title)
-            method_args[6] = ''.join(self.publisher)
             method_args[7] = ''.join(self.link)
+
+            info = wp.WebParser.extractInfo(method_args[7])
+
+            method_args[1] = self.source_type
+            method_args[2] = info["Authors"]
+            method_args[3] = info["Date of Publication"]
+            method_args[4] = info["Title"]
+            method_args[5] = info["Book"]
+            method_args[6] = info["Publisher"]
 
         if method_name == "CiteAPA":
             for el in self.quotes:
@@ -197,11 +202,11 @@ class ExprListener(ParseTreeListener):
             self.quotes = [string.getText() for string in ctx.string_literal()]
             self.quotes = [el.replace('"', '') for el in self.quotes]  
             #print(f"Variable: {var_name}, Value: {var_value}")
-        elif var_name == "sourceType":
-            # print(var_name) 
-            self.source_type = [string.getText().replace('"', '') for string in ctx.string_literal()]
-            self.source_type = ''.join(self.source_type)
-            # print(self.source_type)
+        # elif var_name == "sourceType":
+        #     # print(var_name) 
+        #     self.source_type = [string.getText().replace('"', '') for string in ctx.string_literal()]
+        #     self.source_type = ''.join(self.source_type)
+        #     # print(self.source_type)
         elif var_name == "author":
             self.author = [string.getText().replace('"', '') for string in ctx.string_literal()]
         

@@ -1,11 +1,6 @@
 main
 quotes = ["Scientific writing is a cornerstone of scholarly communication, facilitating the dissemination of knowledge, discoveries, and advancements across various disciplines.",
 "Scientific writing encompasses various genres, including research papers, reviews, and technical reports"]
-sourceType = ["website"]
-author = "Berco A"
-year = 2010
-title = "DSL: Scientific text processing"
-publisher = "TUM"
-link = "www.overleaf/PBLTeam_6"
+link = "https://learn.microsoft.com/en-us/visualstudio/modeling/overview-of-domain-specific-language-tools?view=vs-2022"
 for q in quotes:
 CiteISO(q, sourceType, author, year, title, "", publisher, link)
