@@ -38,7 +38,7 @@ class WebParser:
         )
 
         response = chat_completion.choices[0].message.content
-
+        print("GPT respone:\n", response, "\n")
 
         info = {}
 

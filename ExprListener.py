@@ -99,43 +99,64 @@ class ExprListener(ParseTreeListener):
             # print("Method Name:", method_name)
             # print("Arguments:", method_args)
             
-            method_args[7] = ''.join(self.link)
+            method_args[1] = ''.join(self.link)
+            print(method_args[1])
+            webParser = wp.WebParser(method_args[1])
+            info = webParser.extractInfo()
 
-            info = wp.WebParser.extractInfo(method_args[7])
+            method_args_mod = []
+            method_args_mod.append(method_args[0])
 
-            method_args[1] = self.source_type
-            method_args[2] = info["Authors"]
-            method_args[3] = info["Date of Publication"]
-            method_args[4] = info["Title"]
-            method_args[5] = info["Book"]
-            method_args[6] = info["Publisher"]
+            method_args_mod.append(self.source_type)
+            if "Authors" in info:
+                method_args_mod.append(info["Authors"])
+            else:
+                method_args_mod.append("")
+            if "Date of Publication" in info:
+                method_args_mod.append(info["Date of Publication"])
+            else:
+                method_args_mod.append("")
+            if "Title" in info:
+                method_args_mod.append(info["Title"])
+            else:
+                method_args_mod.append("")
+            if "Book" in info:
+                method_args_mod.append(info["Book"])
+            else:
+                method_args_mod.append("")
+            if "Publisher" in info:
+                method_args_mod.append(info["Publisher"])
+            else:
+                method_args_mod.append("")
+
+            method_args_mod.append(method_args[1])  
 
         if method_name == "CiteAPA":
             for el in self.quotes:
-                method_args[0] = el
-                cite_text,cite_bib = st.Standards.generate_apa_citation(*method_args)
+                method_args_mod[0] = el
+                cite_text,cite_bib = st.Standards.generate_apa_citation(*method_args_mod)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteMLA":
             for el in self.quotes:
-                method_args[0] = el
-                cite_text,cite_bib = st.Standards.generate_mla_citation(*method_args)
+                method_args_mod[0] = el
+                cite_text,cite_bib = st.Standards.generate_mla_citation(*method_args_mod)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteCMS":
             for el in self.quotes:
-                method_args[0] = el
-                cite_text,cite_bib = st.Standardsgenerate_cms_citation(*method_args)
+                method_args_mod[0] = el
+                cite_text,cite_bib = st.Standards.generate_cms_citation(*method_args_mod)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
         elif method_name == "CiteCSE":
             index = 1
             for el in self.quotes:
-                method_args[0] = el
-                cite_text,cite_bib = st.Standards.generate_cse_citation(*method_args, index)
+                method_args_mod[0] = el
+                cite_text,cite_bib = st.Standards.generate_cse_citation(*method_args_mod, index)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
@@ -143,8 +164,8 @@ class ExprListener(ParseTreeListener):
         elif method_name == "CiteISO":
             index = 1
             for el in self.quotes:
-                method_args[0] = el
-                cite_text,cite_bib = st.Standards.cite_iso(*method_args, index)
+                method_args_mod[0] = el
+                cite_text,cite_bib = st.Standards.cite_iso(*method_args_mod, index)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')
@@ -152,8 +173,8 @@ class ExprListener(ParseTreeListener):
         elif method_name == "CiteIEEE":
             index = 1
             for el in self.quotes:
-                method_args[0] = el
-                cite_text,cite_bib = st.Standards.cite_ieee(*method_args, index)
+                method_args_mod[0] = el
+                cite_text,cite_bib = st.Standards.cite_ieee(*method_args_mod, index)
                 print(f"Citation: {cite_text}")
                 print(f"Bibliography: {cite_bib}")
                 print('----------------------------')

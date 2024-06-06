@@ -192,9 +192,9 @@ class Standards:
 
         elif source_type == "website":
             date = datetime.datetime.now()
-            citation_bib += f'{title}. {publisher}. {str(year)}. Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.'
+            citation_bib += f'{title}. {publisher}. {str(year)}. Available from: {link}. Accessed Date {date.strftime("%d %b %Y")}.'
             run = doc.add_paragraph()
-            run = run.add_run(f"[{str(index)}]  {author}, \"{title}\". {publisher}. {str(year)} Available from: {link}. Accesed Date {date.strftime("%d %b %Y")}.")
+            run = run.add_run(f"[{str(index)}]  {author}, \"{title}\". {publisher}. {str(year)} Available from: {link}. Accessed Date {date.strftime("%d %b %Y")}.")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)
@@ -233,7 +233,7 @@ class Standards:
             date = datetime.datetime.now()
             citation_bib += title  + ', ' + publisher + '. ' + str(year) +', ' + '[accessed ' + date.strftime("%d %b %Y") + "]; " +  link + "."
             run = doc.add_paragraph()
-            run = run.add_run(f"[{str(index)}]  {author}, {title}. {publisher}. {str(year)} Available: {link} [Accesed Date {date.strftime("%d %b %Y")}].")
+            run = run.add_run(f"[{str(index)}]  {author}, {title}. {publisher}. {str(year)} Available: {link} [Accessed Date {date.strftime("%d %b %Y")}].")
             font = run.font
             font.name = 'Times New Roman'
             font.size = Pt(12)

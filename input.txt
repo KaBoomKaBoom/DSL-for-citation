@@ -2,6 +2,6 @@ main
 quotes = ["Scientific writing is a cornerstone of scholarly communication, facilitating the dissemination of knowledge, discoveries, and advancements across various disciplines.",
 "Scientific writing encompasses various genres, including research papers, reviews, and technical reports",
 "Speechwriters and public relations professionals, comprising roughly 8 per-cents of the target audience, demand precision and efficacy"]
-link = "www.overleaf/PBLTeam_6"
+link = "https://www.internationalnewsservices.com/sample-features/experts-urge-more-gulf-state-action-to-curb-terrorist-financing-2"
 for q in quotes:
-CiteISO(q, sourceType, author, year, title, "", publisher, link)
+CiteISO(q, link)
