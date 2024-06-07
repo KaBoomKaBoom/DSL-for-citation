@@ -3,3 +3,4 @@ java -jar antlr-4.13.1-complete.jar -Dlanguage=Python3 Expr.g4
 https://www.internationalnewsservices.com/sample-features/experts-urge-more-gulf-state-action-to-curb-terrorist-financing-2
 https://learn.microsoft.com/en-us/visualstudio/modeling/overview-of-domain-specific-language-tools?view=vs-2022
 https://www.internationalnewsservices.com/sample-features/south-africa-awards-contracts-as-it-launches-programme-to-develop-green-energy
+https://medium.com/quick-bites/the-rise-and-rise-of-price-analytics-e7460b6980cd

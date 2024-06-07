@@ -1,14 +1,16 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from groq import Groq
+import requests
 
 class WebParser:
     def __init__(self, link):
         self.link = link
 
     def extractInfo(self):
-        with urlopen(self.link) as response:
-            soup = BeautifulSoup(response, 'html.parser')
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'}
+        response = requests.get(self.link, headers=headers).text
+        soup = BeautifulSoup(response, 'html.parser')
 
         client = Groq(
             api_key="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",
