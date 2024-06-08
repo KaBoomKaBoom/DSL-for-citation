@@ -1,0 +1,24 @@
+main
+quotes = ["Scientific writing is a cornerstone of scholarly communication, facilitating the dissemination of knowledge, discoveries, and advancements across various disciplines.",
+"Scientific writing encompasses various genres, including research papers, reviews, and technical reports",
+"Speechwriters and public relations professionals, comprising roughly 8 per-cents of the target audience, demand precision and efficacy"]
+link = "https://medium.com/quick-bites/the-rise-and-rise-of-price-analytics-e7460b6980cd"
+for q in quotes:
+CiteISO(q, link)
+
+
+main
+quotes = ["South Africas state utility company Eskom currently provides more than 95% of the countrys electricity and it generates more than 41,000MWs of power from its generators.",
+"While more nuclear power stations and coal fired plants will be brought on line over the next 20 years to help meet the countrys power needs"]
+link = "https://www.internationalnewsservices.com/sample-features/south-africa-awards-contracts-as-it-launches-programme-to-develop-green-energy"
+for q in quotes:
+CiteIEEE(q, link)
+
+
+main
+quotes = ["Terrorist financing is continuing the Middle East, highlighted by the devastating attack Istanbul over the new year.",
+"The pro-Syria regime group claims Sunni terrorist organisations are funded by the six Gulf Cooperation Council, GCC, countries, especially Saudi Arabia and Qatar ",
+"But critics say these moves and anti-money laundering, AML, regimes over the past 16 years have not been overly proactive"]
+link = "https://www.internationalnewsservices.com/sample-features/experts-urge-more-gulf-state-action-to-curb-terrorist-financing-2"
+for q in quotes:
+CiteCSE(q, link)

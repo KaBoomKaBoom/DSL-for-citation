@@ -1,7 +1,7 @@
 main
-quotes = ["Scientific writing is a cornerstone of scholarly communication, facilitating the dissemination of knowledge, discoveries, and advancements across various disciplines.",
-"Scientific writing encompasses various genres, including research papers, reviews, and technical reports",
-"Speechwriters and public relations professionals, comprising roughly 8 per-cents of the target audience, demand precision and efficacy"]
-link = "https://medium.com/quick-bites/the-rise-and-rise-of-price-analytics-e7460b6980cd"
+quotes = ["Terrorist financing is continuing the Middle East, highlighted by the devastating attack Istanbul over the new year.",
+"The pro-Syria regime group claims Sunni terrorist organisations are funded by the six Gulf Cooperation Council, GCC, countries, especially Saudi Arabia and Qatar ",
+"But critics say these moves and anti-money laundering, AML, regimes over the past 16 years have not been overly proactive"]
+link = "https://www.internationalnewsservices.com/sample-features/experts-urge-more-gulf-state-action-to-curb-terrorist-financing-2"
 for q in quotes:
-CiteISO(q, link)
+CiteCSE(q, link)
